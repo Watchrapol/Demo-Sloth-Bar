@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>เมนู</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f8f6f2;
+      padding: 30px;
+      color: #333;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #6b4f2c;
+      margin-bottom: 30px;
+    }
+    nav a {
+      margin-right: 15px;
+      color: teal;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+    }
+
+    .menu {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+    }
+    .item {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      width: 220px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .item img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 8px;
+      transition: opacity 0.3s ease;
+    }
+    select, button {
+      margin-top: 10px;
+      padding: 6px;
+      width: 100%;
+      font-size: 14px;
+    }
+    button {
+      background-color: #6b4f2c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #593f26;
+    }
+
+    #selected-list {
+      flex-basis: 350px;
+      background: #fff8f0;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(111, 78, 55, 0.3);
+      display: flex;
+      flex-direction: column;
+      max-height: 600px;
+    }
+    #selected-list h2 {
+      margin-top: 0;
+      color: #6b4f2c;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    #cart-items {
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #d9cbb8;
+      font-size: 16px;
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .cart-item button {
+      background-color: #b03a2e;
+      padding: 4px 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: none;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    .cart-item button:hover {
+      background-color: #80221a;
+    }
+
+    #checkout-btn {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #6b4f2c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+    #checkout-btn:hover {
+      background-color: #593f26;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">หน้าแรก</a>
+    <a href="about.html">เกี่ยวกับ</a>
+    <a href="menu.html">เมนู</a>
+  </nav>
+
+  <h1>☕ เมนูร้านกาแฟของเรา ☕</h1>
+
+  <div class="container">
+    <div class="menu">
+
+      <!-- อเมริกาโน่ -->
+      <div class="item">
+        <img src="images/อเมริกาโน่เย็น.jpg" alt="อเมริกาโน่" id="americano-img" />
+        <div>อเมริกาโน่</div>
+        <select id="americano-option" onchange="changeImage('americano')">
+          <option value="เย็น" selected>เย็น - 45 บาท</option>
+          <option value="ร้อน">ร้อน - 40 บาท</option>
+        </select>
+        <button onclick="addToCart('อเมริกาโน่', getOption('americano-option'))">ใส่รายการ</button>
+      </div>
+
+      <!-- ลาเต้ -->
+      <div class="item">
+        <img src="images/ลาเต้เย็น.jpg" alt="ลาเต้" id="latte-img" />
+        <div>ลาเต้</div>
+        <select id="latte-option" onchange="changeImage('latte')">
+          <option value="ร้อน">ร้อน - 50 บาท</option>
+          <option value="เย็น" selected>เย็น - 55 บาท</option>
+          <option value="ปั่น">ปั่น - 60 บาท</option>
+        </select>
+        <button onclick="addToCart('ลาเต้', getOption('latte-option'))">ใส่รายการ</button>
+      </div>
+
+      <!-- โกโก้ -->
+      <div class="item">
+        <img src="images/โกโก้เย็น.jpg" alt="โกโก้" id="cocoa-img" />
+        <div>โกโก้</div>
+        <select id="cocoa-option" onchange="changeImage('cocoa')">
+          <option value="เย็น" selected>เย็น - 50 บาท</option>
+          <option value="ปั่น">ปั่น - 55 บาท</option>
+        </select>
+        <button onclick="addToCart('โกโก้', getOption('cocoa-option'))">ใส่รายการ</button>
+      </div>
+
+      <!-- คาปูชิโน่ -->
+      <div class="item">
+        <img src="images/คาปูชิโน่เย็น.jpg" alt="คาปูชิโน่" id="cappuccino-img" />
+        <div>คาปูชิโน่</div>
+        <select id="cappuccino-option" onchange="changeImage('cappuccino')">
+          <option value="ร้อน">ร้อน - 50 บาท</option>
+          <option value="เย็น" selected>เย็น - 55 บาท</option>
+          <option value="ปั่น">ปั่น - 60 บาท</option>
+        </select>
+        <button onclick="addToCart('คาปูชิโน่', getOption('cappuccino-option'))">ใส่รายการ</button>
+      </div>
+
+      <!-- มัทฉะลาเต้ -->
+      <div class="item">
+        <img src="images/มัทฉะลาเต้เย็น.jpg" alt="มัทฉะลาเต้" id="matcha-latte-img" />
+        <div>มัทฉะลาเต้</div>
+        <select id="matcha-latte-option" onchange="changeImage('matcha-latte')">
+          <option value="ร้อน">ร้อน - 55 บาท</option>
+          <option value="เย็น" selected>เย็น - 60 บาท</option>
+          <option value="ปั่น">ปั่น - 65 บาท</option>
+        </select>
+        <button onclick="addToCart('มัทฉะลาเต้', getOption('matcha-latte-option'))">ใส่รายการ</button>
+      </div>
+
+      <!-- ชาไทย -->
+      <div class="item">
+        <img src="images/ชาไทยเย็น.jpg" alt="ชาไทย" id="thai-tea-img" />
+        <div>ชาไทย</div>
+        <select id="thai-tea-option" onchange="changeImage('thai-tea')">
+          <option value="ร้อน">ร้อน - 40 บาท</option>
+          <option value="เย็น" selected>เย็น - 45 บาท</option>
+        </select>
+        <button onclick="addToCart('ชาไทย', getOption('thai-tea-option'))">ใส่รายการ</button>
+      </div>
+
+      <!-- ชาเขียวมัทฉะ -->
+      <div class="item">
+        <img src="images/ชาเขียวมัทฉะเย็น.jpg" alt="ชาเขียวมัทฉะ" id="green-matcha-tea-img" />
+        <div>ชาเขียวมัทฉะ</div>
+        <select id="green-matcha-tea-option" onchange="changeImage('green-matcha-tea')">
+          <option value="ร้อน">ร้อน - 45 บาท</option>
+          <option value="เย็น" selected>เย็น - 50 บาท</option>
+        </select>
+        <button onclick="addToCart('ชาเขียวมัทฉะ', getOption('green-matcha-tea-option'))">ใส่รายการ</button>
+      </div>
+
+      <!-- ช็อกโกแลต -->
+      <div class="item">
+        <img src="images/ช็อกโกแลตเย็น.jpg" alt="ช็อกโกแลต" id="chocolate-img" />
+        <div>ช็อกโกแลต</div>
+        <select id="chocolate-option" onchange="changeImage('chocolate')">
+          <option value="เย็น" selected>เย็น - 55 บาท</option>
+          <option value="ร้อน">ร้อน - 55 บาท</option>
+        </select>
+        <button onclick="addToCart('ช็อกโกแลต', getOption('chocolate-option'))">ใส่รายการ</button>
+      </div>
+
+    </div>
+
+    <div id="selected-list">
+      <h2>รายการที่เลือก</h2>
+      <div id="cart-items">
+        <p id="empty-msg">ยังไม่มีสินค้าในตะกร้า</p>
+      </div>
+      <button id="checkout-btn" onclick="goToCheckout()">ไปหน้าชำระเงิน</button>
+    </div>
+  </div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    function getOption(id) {
+      const select = document.getElementById(id);
+      return select.value;
+    }
+
+    function changeImage(drink) {
+      if (drink === 'americano') {
+        const select = document.getElementById('americano-option');
+        const img = document.getElementById('americano-img');
+        const val = select.value;
+
+        if (val === 'ร้อน') img.src = 'images/อเมริกาโน่ร้อน.jpg';
+        else if (val === 'เย็น') img.src = 'images/อเมริกาโน่เย็น.jpg';
+      }
+      else if (drink === 'latte') {
+        const select = document.getElementById('latte-option');
+        const img = document.getElementById('latte-img');
+        const val = select.value;
+
+        if (val === 'ร้อน') img.src = 'images/ลาเต้ร้อน.jpg';
+        else if (val === 'เย็น') img.src = 'images/ลาเต้เย็น.jpg';
+        else if (val === 'ปั่น') img.src = 'images/ลาเต้ปั่น.jpg';
+      }
+      else if (drink === 'cocoa') {
+        const select = document.getElementById('cocoa-option');
+        const img = document.getElementById('cocoa-img');
+        const val = select.value;
+
+        if (val === 'เย็น') img.src = 'images/โกโก้เย็น.jpg';
+        else if (val === 'ปั่น') img.src = 'images/โกโก้ปั่น.jpg';
+      }
+      else if (drink === 'cappuccino') {
+        const select = document.getElementById('cappuccino-option');
+        const img = document.getElementById('cappuccino-img');
+        const val = select.value;
+
+        if (val === 'ร้อน') img.src = 'images/คาปูชิโน่ร้อน.jpg';
+        else if (val === 'เย็น') img.src = 'images/คาปูชิโน่เย็น.jpg';
+        else if (val === 'ปั่น') img.src = 'images/คาปูชิโน่ปั่น.jpg';
+      }
+      else if (drink === 'matcha-latte') {
+        const select = document.getElementById('matcha-latte-option');
+        const img = document.getElementById('matcha-latte-img');
+        const val = select.value;
+
+        if (val === 'ร้อน') img.src = 'images/มัทฉะลาเต้ร้อน.jpg';
+        else if (val === 'เย็น') img.src = 'images/มัทฉะลาเต้เย็น.jpg';
+        else if (val === 'ปั่น') img.src = 'images/มัทฉะลาเต้ปั่น.jpg';
+      }
+      else if (drink === 'thai-tea') {
+        const select = document.getElementById('thai-tea-option');
+        const img = document.getElementById('thai-tea-img');
+        const val = select.value;
+
+        if (val === 'ร้อน') img.src = 'images/ชาไทยร้อน.jpg';
+        else if (val === 'เย็น') img.src = 'images/ชาไทยเย็น.jpg';
+      }
+      else if (drink === 'green-matcha-tea') {
+        const select = document.getElementById('green-matcha-tea-option');
+        const img = document.getElementById('green-matcha-tea-img');
+        const val = select.value;
+
+        if (val === 'ร้อน') img.src = 'images/ชาเขียวมัทฉะร้อน.jpg';
+        else if (val === 'เย็น') img.src = 'images/ชาเขียวมัทฉะเย็น.jpg';
+      }
+      else if (drink === 'chocolate') {
+        const select = document.getElementById('chocolate-option');
+        const img = document.getElementById('chocolate-img');
+        const val = select.value;
+
+        if (val === 'เย็น') img.src = 'images/ช็อกโกแลตเย็น.jpg';
+        else if (val === 'ร้อน') img.src = 'images/ช็อกโกแลตร้อน.jpg';
+      }
+    }
+
+    function addToCart(name, option) {
+      let price = 0;
+      if (name === 'อเมริกาโน่') price = option === 'ร้อน' ? 40 : 45;
+      else if (name === 'ลาเต้') {
+        if (option === 'ร้อน') price = 50;
+        else if (option === 'เย็น') price = 55;
+        else if (option === 'ปั่น') price = 60;
+      }
+      else if (name === 'โกโก้') price = option === 'เย็น' ? 50 : 55;
+      else if (name === 'คาปูชิโน่') {
+        if (option === 'ร้อน') price = 50;
+        else if (option === 'เย็น') price = 55;
+        else if (option === 'ปั่น') price = 60;
+      }
+      else if (name === 'มัทฉะลาเต้') {
+        if (option === 'ร้อน') price = 55;
+        else if (option === 'เย็น') price = 60;
+        else if (option === 'ปั่น') price = 65;
+      }
+      else if (name === 'ชาไทย') price = option === 'ร้อน' ? 40 : 45;
+      else if (name === 'ชาเขียวมัทฉะ') price = option === 'ร้อน' ? 45 : 50;
+      else if (name === 'ช็อกโกแลต') price = option === 'เย็น' ? 55 : 60;
+
+      const item = {name, option, price};
+      cart.push(item);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cart-items');
+      if (cart.length === 0) {
+        container.innerHTML = '<p id="empty-msg">ยังไม่มีสินค้าในตะกร้า</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      cart.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <span>${item.name} (${item.option}) - ${item.price} บาท</span>
+          <button onclick="removeFromCart(${index})">ลบ</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function goToCheckout() {
+      if (cart.length === 0) {
+        alert('กรุณาเลือกสินค้าในตะกร้าก่อน');
+        return;
+      }
+      window.location.href = 'cart.html';
+    }
+
+    // โหลดข้อมูลตะกร้าเมื่อเปิดหน้า
+    renderCart();
+  </script>
+</body>
+</html>
